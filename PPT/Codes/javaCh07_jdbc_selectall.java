@@ -16,17 +16,29 @@ public class EmpCreateTable {
 					USER_PASS);
 			Statement stmt = conn.createStatement();
 
-			int res = stmt.executeUpdate(
-					"INSERT INTO EMPLOYEE (NO,NAME,SEX,SALARY) VALUES ('1','JACK','M',5000)"
-							+ ",('2','LUCY','F',6000)");
+			ResultSet rs = stmt.executeQuery("SELECT * FROM EMPLOYEE;");
 
-			if (res > 0) {
-				// 返回受影响的行数
-				System.out.println("添加成功！");
+			// 结果集列信息
+			ResultSetMetaData rsmd = rs.getMetaData();
+
+			if (null != rs) {
+				System.out.print(rsmd.getColumnName(1) + "\t");
+				System.out.print(rsmd.getColumnName(2) + "\t");
+				System.out.print(rsmd.getColumnName(3) + "\t");
+				System.out.print(rsmd.getColumnName(4) + "\t");
+				System.out.println();
+
+				while (rs.next()) {
+					for (int i = 1; i <= rsmd.getColumnCount(); i++) {
+						System.out.print(rs.getString(i) + "\t");
+					}
+					System.out.println();
+				}
 			}
 
 			System.out.println("关闭连接...");
 
+			rs.close();
 			stmt.close();
 			conn.close();
 		} catch (Exception e) {

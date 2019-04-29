@@ -16,7 +16,6 @@ public class EmpCreateTable {
 					USER_PASS);
 			Statement stmt = conn.createStatement();
 
-			// 创建员工表
 			ResultSet rs = stmt
 					.executeQuery("SELECT NO,NAME,SEX,SALARY FROM EMPLOYEE;");
 
@@ -30,6 +29,7 @@ public class EmpCreateTable {
 
 			System.out.println("关闭连接...");
 
+			rs.close();
 			stmt.close();
 			conn.close();
 		} catch (Exception e) {
